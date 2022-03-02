@@ -24,17 +24,17 @@ func getHeader(headerLength int) header {
 }
 
 type xmlProcessData struct {
-	XMLName              xml.Name `xml:"Message"`
-	Header               header   `xml:"Header"`
-	FactoryName          string   `xml:"Body>FACTORYNAME"`
-	ProductSpecName      string   `xml:"Body>PRODUCTSPECNAME"`
-	ProcessFlowName      string   `xml:"Body>PROCESSFLOWNAME"`
-	ProcessOperationName string   `xml:"Body>PROCESSOPERATIONNAME"`
-	MachineName          string   `xml:"Body>MACHINENAME"`
-	MachineRecipeName    string   `xml:"Body>MACHINERECIPENAME"`
-	UnitName             string   `xml:"Body>UNITNAME"`
-	LotName              string   `xml:"Body>LOTNAME"`
-	ProductName          string   `xml:"Body>PRODUCTNAME"`
+	XMLName              xml.Name  `xml:"Message"`
+	Header               header    `xml:"Header"`
+	FactoryName          string    `xml:"Body>FACTORYNAME"`
+	ProductSpecName      string    `xml:"Body>PRODUCTSPECNAME"`
+	ProcessFlowName      string    `xml:"Body>PROCESSFLOWNAME"`
+	ProcessOperationName string    `xml:"Body>PROCESSOPERATIONNAME"`
+	MachineName          string    `xml:"Body>MACHINENAME"`
+	MachineRecipeName    string    `xml:"Body>MACHINERECIPENAME"`
+	UnitName             string    `xml:"Body>UNITNAME"`
+	LotName              string    `xml:"Body>LOTNAME"`
+	ProductName          string    `xml:"Body>PRODUCTNAME"`
 	ItemList             []XMLItem `xml:"Body>ITEMLIST>ITEM"`
 }
 
@@ -116,7 +116,7 @@ func NewXMLProcessData(headerCount int, machine, recipe, unit, spec, flow, lot, 
 	return &processData
 }
 
-func makeEmpty(s string) string{
+func makeEmpty(s string) string {
 	if s == "" {
 		return emptyItem
 	}
