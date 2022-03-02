@@ -17,7 +17,7 @@ type jsonProcessData struct {
 }
 
 type site struct {
-	SampleMaterialName string `json:"SAMPLEMATERAILNAME,omitempty"`
+	SampleMaterialName string `json:"SAMPLEMATERIALNAME,omitempty"`
 	SiteName           string `json:"SITENAME"`
 	SiteValue          string `json:"SITEVALUE"`
 }
