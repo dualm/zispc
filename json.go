@@ -33,16 +33,16 @@ func (data *jsonProcessData) Encode() ([]byte, error) {
 
 func NewJSONProcessData(machine, lot, recipe, factory, unit, product, spec, flow, operation, item string, sites map[string]string) ProcessData {
 	return &jsonProcessData{
-		FactoryName:          factory,
-		ProductSpecName:      spec,
-		ProductFlowName:      flow,
-		ProcessOperationName: operation,
-		MachineName:          machine,
-		MachineRecipeName:    recipe,
-		UnitName:             unit,
-		LotName:              lot,
-		ProductName:          product,
-		ItemName:             item,
+		FactoryName:          makeEmpty(factory),
+		ProductSpecName:      makeEmpty(spec),
+		ProductFlowName:      makeEmpty(flow),
+		ProcessOperationName: makeEmpty(operation),
+		MachineName:          makeEmpty(machine),
+		MachineRecipeName:    makeEmpty(recipe),
+		UnitName:             makeEmpty(unit),
+		LotName:              makeEmpty(lot),
+		ProductName:          makeEmpty(product),
+		ItemName:             makeEmpty(item),
 		SiteList:             makeSiteList("", sites),
 	}
 }
@@ -66,15 +66,15 @@ func (data *jsonProcessDataMulti) Encode() ([]byte, error) {
 
 func NewJSONProcessDataMulti(machine, lot, recipe, factory, unit, product, spec, flow, operation string, sites []Sites) ProcessData {
 	return &jsonProcessDataMulti{
-		FactoryName:          factory,
-		ProductSpecName:      spec,
-		ProductFlowName:      flow,
-		ProcessOperationName: operation,
-		MachineName:          machine,
-		MachineRecipeName:    recipe,
-		UnitName:             unit,
-		LotName:              lot,
-		ProductName:          product,
+		FactoryName:          makeEmpty(factory),
+		ProductSpecName:      makeEmpty(spec),
+		ProductFlowName:      makeEmpty(flow),
+		ProcessOperationName: makeEmpty(operation),
+		MachineName:          makeEmpty(machine),
+		MachineRecipeName:    makeEmpty(recipe),
+		UnitName:             makeEmpty(unit),
+		LotName:              makeEmpty(lot),
+		ProductName:          makeEmpty(product),
 		SiteList:             sites,
 	}
 }
@@ -91,7 +91,7 @@ func makeSiteList(sampleName string, sites map[string]string) []site {
 	re := make([]site, 0, len(sites))
 	for k, v := range sites {
 		re = append(re, site{
-			SampleMaterialName: sampleName,
+			SampleMaterialName: makeEmpty(sampleName),
 			SiteName:           k,
 			SiteValue:          v,
 		})
@@ -102,7 +102,7 @@ func makeSiteList(sampleName string, sites map[string]string) []site {
 
 func makeSites(item, sampleName string, sites map[string]string) Sites {
 	return Sites{
-		ItemName: item,
+		ItemName: makeEmpty(item),
 		Sites:    makeSiteList(sampleName, sites),
 	}
 }
