@@ -17,8 +17,14 @@ type jsonProcessData struct {
 }
 
 type site struct {
-	SiteName  string `json:"SITENAME"`
-	SiteValue string `json:"SITEVALUE"`
+	SampleMaterialName string `json:"SAMPLEMATERAILNAME,omitempty"`
+	SiteName           string `json:"SITENAME"`
+	SiteValue          string `json:"SITEVALUE"`
+}
+
+type Sites struct {
+	ItemName string `json:"ITEMNAME"`
+	Sites    []site `json:"SITES"`
 }
 
 func (data *jsonProcessData) Encode() ([]byte, error) {
@@ -37,33 +43,28 @@ func NewJSONProcessData(machine, lot, recipe, factory, unit, product, spec, flow
 		LotName:              lot,
 		ProductName:          product,
 		ItemName:             item,
-		SiteList:             makeSiteList(sites),
+		SiteList:             makeSiteList("", sites),
 	}
 }
 
 type jsonProcessDataMulti struct {
-	FactoryName          string      `json:"FACTORYNAME"`
-	ProductSpecName      string      `json:"PRODUCTSPECNAME"`
-	ProductFlowName      string      `json:"PRODUCTFLOWNAME"`
-	ProcessOperationName string      `json:"PROCESSOPERATIONNAME"`
-	MachineName          string      `json:"MACHINENAME"`
-	MachineRecipeName    string      `json:"MACHINERECIPENAME"`
-	UnitName             string      `json:"UNITNAME"`
-	LotName              string      `json:"LOTNAME"`
-	ProductName          string      `json:"PRODUCTNAME"`
-	SiteList             []JSONSites `json:"SITELIST"`
-}
-
-type JSONSites struct {
-	ItemName string `json:"ITEMNAME"`
-	Sites    []site `json:"SITES"`
+	FactoryName          string  `json:"FACTORYNAME"`
+	ProductSpecName      string  `json:"PRODUCTSPECNAME"`
+	ProductFlowName      string  `json:"PRODUCTFLOWNAME"`
+	ProcessOperationName string  `json:"PROCESSOPERATIONNAME"`
+	MachineName          string  `json:"MACHINENAME"`
+	MachineRecipeName    string  `json:"MACHINERECIPENAME"`
+	UnitName             string  `json:"UNITNAME"`
+	LotName              string  `json:"LOTNAME"`
+	ProductName          string  `json:"PRODUCTNAME"`
+	SiteList             []Sites `json:"SITELIST"`
 }
 
 func (data *jsonProcessDataMulti) Encode() ([]byte, error) {
 	return json.MarshalIndent(data, "  ", "    ")
 }
 
-func NewJSONProcessDataMulti(machine, lot, recipe, factory, unit, product, spec, flow, operation string, sites []JSONSites) ProcessData {
+func NewJSONProcessDataMulti(machine, lot, recipe, factory, unit, product, spec, flow, operation string, sites []Sites) ProcessData {
 	return &jsonProcessDataMulti{
 		FactoryName:          factory,
 		ProductSpecName:      spec,
@@ -78,23 +79,30 @@ func NewJSONProcessDataMulti(machine, lot, recipe, factory, unit, product, spec,
 	}
 }
 
-func AddSite(s []JSONSites, item string, sites map[string]string) []JSONSites {
-	s = append(s, JSONSites{
-		ItemName: item,
-		Sites:    makeSiteList(sites),
-	})
+func AddSite(s []Sites, item, sampleName string, sites map[string]string) []Sites {
+	if s == nil {
+		s = make([]Sites, 0, 1)
+	}
 
-	return s
+	return append(s, makeSites(item, sampleName, sites))
 }
 
-func makeSiteList(sites map[string]string) []site {
+func makeSiteList(sampleName string, sites map[string]string) []site {
 	re := make([]site, 0, len(sites))
 	for k, v := range sites {
 		re = append(re, site{
-			SiteName:  k,
-			SiteValue: v,
+			SampleMaterialName: sampleName,
+			SiteName:           k,
+			SiteValue:          v,
 		})
 	}
 
 	return re
+}
+
+func makeSites(item, sampleName string, sites map[string]string) Sites {
+	return Sites{
+		ItemName: item,
+		Sites:    makeSiteList(sampleName, sites),
+	}
 }
