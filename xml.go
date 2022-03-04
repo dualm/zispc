@@ -19,7 +19,7 @@ func getHeader(headerLength int) header {
 		MessageName:               "DataCollectRequest",
 		EventComment:              "DataCollectRequest",
 		EventUser:                 "DataCollectRequest",
-		OriginalSourceSubjectName: getTransactionId() + "--" + getRandStr(headerLength) + "--DataCollectRequest",
+		OriginalSourceSubjectName: "_INBOX." + getRandStr(headerLength) + "." + getTransactionId(),
 	}
 }
 
