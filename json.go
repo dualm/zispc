@@ -5,7 +5,7 @@ import "encoding/json"
 type jsonProcessData struct {
 	FactoryName          string `json:"FACTORYNAME"`
 	ProductSpecName      string `json:"PRODUCTSPECNAME"`
-	ProductFlowName      string `json:"PRODUCTFLOWNAME"`
+	ProcessFlowName      string `json:"PROCESSFLOWNAME"`
 	ProcessOperationName string `json:"PROCESSOPERATIONNAME"`
 	MachineName          string `json:"MACHINENAME"`
 	MachineRecipeName    string `json:"MACHINERECIPENAME"`
@@ -35,7 +35,7 @@ func NewJSONProcessData(machine, lot, recipe, factory, unit, product, spec, flow
 	return &jsonProcessData{
 		FactoryName:          makeEmpty(factory),
 		ProductSpecName:      makeEmpty(spec),
-		ProductFlowName:      makeEmpty(flow),
+		ProcessFlowName:      makeEmpty(flow),
 		ProcessOperationName: makeEmpty(operation),
 		MachineName:          makeEmpty(machine),
 		MachineRecipeName:    makeEmpty(recipe),
