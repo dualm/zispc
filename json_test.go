@@ -47,7 +47,7 @@ func TestNewJSONProcessData(t *testing.T) {
 			want: &jsonProcessData{
 				FactoryName:          "factory",
 				ProductSpecName:      "spec",
-				ProductFlowName:      "flow",
+				ProcessFlowName:      "flow",
 				ProcessOperationName: "operation",
 				MachineName:          "machine",
 				MachineRecipeName:    "recipe",
@@ -197,7 +197,7 @@ func TestNewJSONProcessDataMulti(t *testing.T) {
 			want: &jsonProcessDataMulti{
 				FactoryName:          "factory",
 				ProductSpecName:      "spec",
-				ProductFlowName:      "flow",
+				ProcessFlowName:      "flow",
 				ProcessOperationName: "operation",
 				MachineName:          "machine",
 				MachineRecipeName:    "recipe",
