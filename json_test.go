@@ -188,8 +188,8 @@ func TestNewJSONProcessDataMulti(t *testing.T) {
 				sites: func() []Sites {
 					re := make([]Sites, 0)
 
-					re = AddSite(re, "1", "sample1", map[string]string{"S01": "1", "S002": "2", "": "3"})
-					re = AddSite(re, "2", "sample1", map[string]string{"S01": "1", "S002": "2", "": "3"})
+					re = AddSite(re, "1", "sample1", "", map[string]string{"S01": "1", "S002": "2", "": "3"})
+					re = AddSite(re, "2", "sample1", "", map[string]string{"S01": "1", "S002": "2", "": "3"})
 
 					return re
 				}(),
@@ -272,6 +272,7 @@ func TestAddSite(t *testing.T) {
 		s          []Sites
 		item       string
 		sampleName string
+		sitevalue  string
 		sites      map[string]string
 	}
 	tests := []struct {
@@ -368,10 +369,33 @@ func TestAddSite(t *testing.T) {
 				},
 			},
 		},
+		{
+			name: "3",
+			args: args{
+				s:          nil,
+				item:       "item1",
+				sampleName: "sample1",
+				sitevalue:  "v1",
+				sites:      nil,
+			},
+			want: []Sites{
+				{
+					ItemName: "item1",
+					Sites: []site{
+						{
+							SampleMaterialName: "sample1",
+							SiteName:           "S01",
+							SiteValue:          "v1",
+						},
+					},
+				},
+			},
+		},
 	}
+	SetWithS()
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := AddSite(tt.args.s, tt.args.item, tt.args.sampleName, tt.args.sites); !reflect.DeepEqual(got, tt.want) {
+			if got := AddSite(tt.args.s, tt.args.item, tt.args.sampleName, tt.args.sitevalue, tt.args.sites); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("AddSite() = %v, want %v", got, tt.want)
 			}
 		})
