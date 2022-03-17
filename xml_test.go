@@ -61,7 +61,7 @@ func TestNewProcessData(t *testing.T) {
 						ItemName: "k1",
 						SiteList: []dvSite{
 							{
-								SiteName:           "001",
+								SiteName:           "S01",
 								SiteValue:          "v1",
 								SampleMaterialName: "product",
 							},
@@ -72,7 +72,7 @@ func TestNewProcessData(t *testing.T) {
 						ItemName: "k2",
 						SiteList: []dvSite{
 							{
-								SiteName:           "001",
+								SiteName:           "S01",
 								SiteValue:          "v2",
 								SampleMaterialName: "product",
 							},
@@ -138,8 +138,44 @@ func TestAddItem(t *testing.T) {
 					ItemName: "k1",
 					SiteList: []dvSite{
 						{
-							SiteName:           "001",
+							SiteName:           "S01",
 							SiteValue:          "v1",
+							SampleMaterialName: "prod",
+						},
+					},
+				},
+			},
+		},
+		{
+			name: "2",
+			args: args{
+				list:         make([]XMLItem, 0),
+				name:         "k1",
+				value:        "v1",
+				materialName: "prod",
+				sites: map[string]string{
+					"S01":  "1",
+					"S02":  "2",
+					"S100": "100",
+				},
+			},
+			want: []XMLItem{
+				{
+					ItemName: "k1",
+					SiteList: []dvSite{
+						{
+							SiteName:           "S01",
+							SiteValue:          "1",
+							SampleMaterialName: "prod",
+						},
+						{
+							SiteName:           "S02",
+							SiteValue:          "2",
+							SampleMaterialName: "prod",
+						},
+						{
+							SiteName:           "S100",
+							SiteValue:          "100",
 							SampleMaterialName: "prod",
 						},
 					},
@@ -152,6 +188,46 @@ func TestAddItem(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := AddItemToXML(tt.args.list, tt.args.name, tt.args.value, tt.args.materialName, tt.args.sites); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("AddItem() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_checkSiteName(t *testing.T) {
+	type args struct {
+		k string
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			name: "1",
+			args: args{
+				k: "S01",
+			},
+			want: "S01",
+		},
+		{
+			name: "2",
+			args: args{
+				k: "S1",
+			},
+			want: "",
+		},
+		{
+			name: "3",
+			args: args{
+				k: "001",
+			},
+			want: "",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := checkSiteName(tt.args.k); got != tt.want {
+				t.Errorf("checkKey() = %v, want %v", got, tt.want)
 			}
 		})
 	}

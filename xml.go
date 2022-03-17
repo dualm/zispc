@@ -1,6 +1,9 @@
 package zispc
 
-import "encoding/xml"
+import (
+	"encoding/xml"
+	"fmt"
+)
 
 const (
 	emptyItem = "-"
@@ -61,7 +64,7 @@ func AddItemToXML(list []XMLItem, name, value, materialName string, sites map[st
 			ItemName: name,
 			SiteList: []dvSite{
 				{
-					SiteName:           "001",
+					SiteName:           "S01",
 					SiteValue:          value,
 					SampleMaterialName: materialName,
 				},
@@ -71,7 +74,7 @@ func AddItemToXML(list []XMLItem, name, value, materialName string, sites map[st
 		siteList := make([]dvSite, 0, len(sites))
 		for k, v := range sites {
 			siteList = append(siteList, dvSite{
-				SiteName:           k,
+				SiteName:           checkSiteName(k),
 				SiteValue:          v,
 				SampleMaterialName: materialName,
 			})
@@ -122,4 +125,20 @@ func makeEmpty(s string) string {
 	}
 
 	return s
+}
+
+func checkSiteName(k string) string {
+	if len(k) < 3 {
+		setError(fmt.Errorf("wrong key length, Key : %s", k))
+
+		return ""
+	}
+
+	if k[0] != 'S' {
+		setError(fmt.Errorf(`key not start with "S", Key: %s`, k))
+
+		return ""
+	}
+
+	return k
 }

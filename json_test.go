@@ -39,9 +39,9 @@ func TestNewJSONProcessData(t *testing.T) {
 				operation: "operation",
 				item:      "item",
 				sites: map[string]string{
-					"001": "1",
-					"002": "2",
-					"003": "3",
+					"S01": "1",
+					"S02": "2",
+					"S03": "3",
 				},
 			},
 			want: &jsonProcessData{
@@ -57,15 +57,15 @@ func TestNewJSONProcessData(t *testing.T) {
 				ItemName:             "item",
 				SiteList: []site{
 					{
-						SiteName:  "001",
+						SiteName:  "S01",
 						SiteValue: "1",
 					},
 					{
-						SiteName:  "002",
+						SiteName:  "S02",
 						SiteValue: "2",
 					},
 					{
-						SiteName:  "003",
+						SiteName:  "S03",
 						SiteValue: "3",
 					},
 				},
@@ -103,22 +103,22 @@ func Test_makeSiteList(t *testing.T) {
 			name: "1",
 			args: args{
 				sampleName: "sample",
-				sites:      map[string]string{"001": "1", "002": "2", "003": "3"},
+				sites:      map[string]string{"S01": "1", "S002": "2", "S003": "3"},
 			},
 			want: []site{
 				{
 					SampleMaterialName: "sample",
-					SiteName:           "001",
+					SiteName:           "S01",
 					SiteValue:          "1",
 				},
 				{
 					SampleMaterialName: "sample",
-					SiteName:           "002",
+					SiteName:           "S002",
 					SiteValue:          "2",
 				},
 				{
 					SampleMaterialName: "sample",
-					SiteName:           "003",
+					SiteName:           "S003",
 					SiteValue:          "3",
 				},
 			},
@@ -127,19 +127,19 @@ func Test_makeSiteList(t *testing.T) {
 			name: "2",
 			args: args{
 				sampleName: "",
-				sites:      map[string]string{"001": "1", "002": "2", "003": "3"},
+				sites:      map[string]string{"S001": "1", "S002": "2", "": "3"},
 			},
 			want: []site{
 				{
-					SiteName:  "001",
+					SiteName:  "S001",
 					SiteValue: "1",
 				},
 				{
-					SiteName:  "002",
+					SiteName:  "S002",
 					SiteValue: "2",
 				},
 				{
-					SiteName:  "003",
+					SiteName:  "",
 					SiteValue: "3",
 				},
 			},
@@ -188,8 +188,8 @@ func TestNewJSONProcessDataMulti(t *testing.T) {
 				sites: func() []Sites {
 					re := make([]Sites, 0)
 
-					re = AddSite(re, "1", "sample1", map[string]string{"001": "1", "002": "2", "003": "3"})
-					re = AddSite(re, "2", "sample1", map[string]string{"001": "1", "002": "2", "003": "3"})
+					re = AddSite(re, "1", "sample1", map[string]string{"S01": "1", "S002": "2", "": "3"})
+					re = AddSite(re, "2", "sample1", map[string]string{"S01": "1", "S002": "2", "": "3"})
 
 					return re
 				}(),
@@ -210,17 +210,17 @@ func TestNewJSONProcessDataMulti(t *testing.T) {
 						Sites: []site{
 							{
 								SampleMaterialName: "sample1",
-								SiteName:           "001",
+								SiteName:           "S01",
 								SiteValue:          "1",
 							},
 							{
 								SampleMaterialName: "sample1",
-								SiteName:           "002",
+								SiteName:           "S002",
 								SiteValue:          "2",
 							},
 							{
 								SampleMaterialName: "sample1",
-								SiteName:           "003",
+								SiteName:           "",
 								SiteValue:          "3",
 							},
 						},
@@ -230,17 +230,17 @@ func TestNewJSONProcessDataMulti(t *testing.T) {
 						Sites: []site{
 							{
 								SampleMaterialName: "sample1",
-								SiteName:           "001",
+								SiteName:           "S01",
 								SiteValue:          "1",
 							},
 							{
 								SampleMaterialName: "sample1",
-								SiteName:           "002",
+								SiteName:           "S002",
 								SiteValue:          "2",
 							},
 							{
 								SampleMaterialName: "sample1",
-								SiteName:           "003",
+								SiteName:           "",
 								SiteValue:          "3",
 							},
 						},
@@ -286,8 +286,8 @@ func TestAddSite(t *testing.T) {
 				item:       "item1",
 				sampleName: "sample1",
 				sites: map[string]string{
-					"k1": "v1",
-					"k2": "v2",
+					"S01": "v1",
+					"S02": "v2",
 				},
 			},
 			want: []Sites{
@@ -296,12 +296,12 @@ func TestAddSite(t *testing.T) {
 					Sites: []site{
 						{
 							SampleMaterialName: "sample1",
-							SiteName:           "k1",
+							SiteName:           "S01",
 							SiteValue:          "v1",
 						},
 						{
 							SampleMaterialName: "sample1",
-							SiteName:           "k2",
+							SiteName:           "S02",
 							SiteValue:          "v2",
 						},
 					},
@@ -317,12 +317,12 @@ func TestAddSite(t *testing.T) {
 						Sites: []site{
 							{
 								SampleMaterialName: "sample1",
-								SiteName:           "k1",
+								SiteName:           "S01",
 								SiteValue:          "v1",
 							},
 							{
 								SampleMaterialName: "sample1",
-								SiteName:           "k2",
+								SiteName:           "S02",
 								SiteValue:          "v2",
 							},
 						},
@@ -331,8 +331,8 @@ func TestAddSite(t *testing.T) {
 				item:       "item2",
 				sampleName: "sample1",
 				sites: map[string]string{
-					"k3": "v3",
-					"k4": "v4",
+					"S03": "v3",
+					"S04": "v4",
 				},
 			},
 			want: []Sites{
@@ -341,12 +341,12 @@ func TestAddSite(t *testing.T) {
 					Sites: []site{
 						{
 							SampleMaterialName: "sample1",
-							SiteName:           "k1",
+							SiteName:           "S01",
 							SiteValue:          "v1",
 						},
 						{
 							SampleMaterialName: "sample1",
-							SiteName:           "k2",
+							SiteName:           "S02",
 							SiteValue:          "v2",
 						},
 					},
@@ -356,12 +356,12 @@ func TestAddSite(t *testing.T) {
 					Sites: []site{
 						{
 							SampleMaterialName: "sample1",
-							SiteName:           "k3",
+							SiteName:           "S03",
 							SiteValue:          "v3",
 						},
 						{
 							SampleMaterialName: "sample1",
-							SiteName:           "k4",
+							SiteName:           "S04",
 							SiteValue:          "v4",
 						},
 					},

@@ -91,8 +91,8 @@ func makeSiteList(sampleName string, sites map[string]string) []site {
 	re := make([]site, 0, len(sites))
 	for k, v := range sites {
 		re = append(re, site{
-			SampleMaterialName: makeEmpty(sampleName),
-			SiteName:           k,
+			SampleMaterialName: sampleName,
+			SiteName:           checkSiteName(k),
 			SiteValue:          v,
 		})
 	}
@@ -102,7 +102,7 @@ func makeSiteList(sampleName string, sites map[string]string) []site {
 
 func makeSites(item, sampleName string, sites map[string]string) Sites {
 	return Sites{
-		ItemName: makeEmpty(item),
+		ItemName: item,
 		Sites:    makeSiteList(sampleName, sites),
 	}
 }
