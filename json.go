@@ -92,7 +92,7 @@ func makeSiteList(sampleName string, sites map[string]string) []site {
 	for k, v := range sites {
 		re = append(re, site{
 			SampleMaterialName: sampleName,
-			SiteName:           checkSiteName(k),
+			SiteName:           checkSitename(k),
 			SiteValue:          v,
 		})
 	}

@@ -197,6 +197,7 @@ func Test_checkSiteName(t *testing.T) {
 	type args struct {
 		k string
 	}
+	SetWithS()
 	tests := []struct {
 		name string
 		args args
@@ -216,17 +217,32 @@ func Test_checkSiteName(t *testing.T) {
 			},
 			want: "",
 		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := checkSitename(tt.args.k); got != tt.want {
+				t.Errorf("checkKey() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+
+	UnsetWithS()
+	tests = []struct {
+		name string
+		args args
+		want string
+	}{
 		{
 			name: "3",
 			args: args{
 				k: "001",
 			},
-			want: "",
+			want: "001",
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := checkSiteName(tt.args.k); got != tt.want {
+			if got := checkSitename(tt.args.k); got != tt.want {
 				t.Errorf("checkKey() = %v, want %v", got, tt.want)
 			}
 		})
