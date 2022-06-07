@@ -16,13 +16,23 @@ type header struct {
 	OriginalSourceSubjectName string   `xml:"ORIGINALSOURCESUBJECTNAME"`
 }
 
-func getHeader(headerLength int) header {
-	return header{
-		MessageName:               "DataCollectRequest",
-		EventComment:              "DataCollectRequest",
-		EventUser:                 "DataCollectRequest",
-		OriginalSourceSubjectName: "_INBOX." + getRandStr(headerLength) + "." + getTransactionId(),
+func getHeader(headerLength int, messageName ...string) header {
+	_name := "DataCollectRequest"
+
+	if len(messageName) > 0 {
+		_name = messageName[0]
 	}
+
+	return header{
+		MessageName:               _name,
+		EventComment:              _name,
+		EventUser:                 _name,
+		OriginalSourceSubjectName: makeSubjectName(headerLength),
+	}
+}
+
+func makeSubjectName(headerLength int) string {
+	return "_INBOX." + getRandStr(headerLength) + getTransactionId()
 }
 
 type xmlProcessData struct {
@@ -73,7 +83,7 @@ func AddItemToXML(list []XMLItem, name, value, materialName string, sites map[st
 		siteList := make([]dvSite, 0, len(sites))
 		for k, v := range sites {
 			siteList = append(siteList, dvSite{
-				SiteName:           checkSitename(k),
+				SiteName:           checkSiteName(k),
 				SiteValue:          v,
 				SampleMaterialName: materialName,
 			})
@@ -88,8 +98,8 @@ func AddItemToXML(list []XMLItem, name, value, materialName string, sites map[st
 }
 
 func NewXMLProcessData(headerCount int, machine, recipe, unit, spec, flow, lot, product, factory, operation string,
-	dv map[string]string, dvItems []XMLItem) ProcessData {
-	header := getHeader(headerCount)
+	dv map[string]string, dvItems []XMLItem, messageName ...string) ProcessData {
+	header := getHeader(headerCount, messageName...)
 
 	items := make([]XMLItem, 0)
 
@@ -125,4 +135,3 @@ func makeEmpty(s string) string {
 
 	return s
 }
-

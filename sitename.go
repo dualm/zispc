@@ -22,7 +22,7 @@ func OnlySiteName() string {
 	return "001"
 }
 
-func checkSitename(k string) string {
+func checkSiteName(k string) string {
 	if len(k) < 3 {
 		setError(fmt.Errorf("wrong key length, Key : %s", k))
 
@@ -38,7 +38,7 @@ func checkSitename(k string) string {
 	return k
 }
 
-func GetSitename(n int) string {
+func GetSiteName(n int) string {
 	if withS {
 		return fmt.Sprintf("S%02d", n)
 	}

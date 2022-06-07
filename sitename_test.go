@@ -29,7 +29,7 @@ func TestGetSitename(t *testing.T) {
 	SetWithS()
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := GetSitename(tt.args.n); got != tt.want {
+			if got := GetSiteName(tt.args.n); got != tt.want {
 				t.Errorf("GetSitename() = %v, want %v", got, tt.want)
 			}
 		})
@@ -57,7 +57,7 @@ func TestGetSitename(t *testing.T) {
 	UnsetWithS()
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := GetSitename(tt.args.n); got != tt.want {
+			if got := GetSiteName(tt.args.n); got != tt.want {
 				t.Errorf("GetSitename() = %v, want %v", got, tt.want)
 			}
 		})

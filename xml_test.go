@@ -6,6 +6,9 @@ import (
 )
 
 func TestNewProcessData(t *testing.T) {
+	normalHeader := getHeader(10, "")
+	svHeader := getHeader(10, "DataCollectRequest-sv")
+
 	type args struct {
 		headerCount int
 		machine     string
@@ -19,6 +22,7 @@ func TestNewProcessData(t *testing.T) {
 		operation   string
 		dv          map[string]string
 		dvItems     []XMLItem
+		messageName []string
 	}
 
 	tests := []struct {
@@ -41,12 +45,17 @@ func TestNewProcessData(t *testing.T) {
 				operation:   "operation",
 				dv: map[string]string{
 					"k1": "v1",
-					"k2": "v2",
 				},
-				dvItems: nil,
+				dvItems:     nil,
+				messageName: []string{},
 			},
 			want: &xmlProcessData{
-				Header:               getHeader(10),
+				Header: header{
+					MessageName:               "DataCollectRequest",
+					EventComment:              "DataCollectRequest",
+					EventUser:                 "DataCollectRequest",
+					OriginalSourceSubjectName: normalHeader.OriginalSourceSubjectName,
+				},
 				FactoryName:          "factory",
 				ProductSpecName:      "spec",
 				ProcessFlowName:      "flow",
@@ -67,13 +76,46 @@ func TestNewProcessData(t *testing.T) {
 							},
 						},
 					},
-
+				},
+			},
+		},
+		{
+			name: "2",
+			args: args{
+				headerCount: 10,
+				machine:     "machine",
+				recipe:      "recipe",
+				unit:        "unit",
+				spec:        "spec",
+				flow:        "flow",
+				lot:         "lot",
+				product:     "product",
+				factory:     "factory",
+				operation:   "operation",
+				dv: map[string]string{
+					"k1": "v1",
+				},
+				dvItems:     nil,
+				messageName: []string{"DataCollectRequest-sv"},
+			},
+			want: &xmlProcessData{
+				Header:               svHeader,
+				FactoryName:          "factory",
+				ProductSpecName:      "spec",
+				ProcessFlowName:      "flow",
+				ProcessOperationName: "operation",
+				MachineName:          "machine",
+				MachineRecipeName:    "recipe",
+				UnitName:             "unit",
+				LotName:              "lot",
+				ProductName:          "product",
+				ItemList: []XMLItem{
 					{
-						ItemName: "k2",
+						ItemName: "k1",
 						SiteList: []dvSite{
 							{
 								SiteName:           "S01",
-								SiteValue:          "v2",
+								SiteValue:          "v1",
 								SampleMaterialName: "product",
 							},
 						},
@@ -99,9 +141,10 @@ func TestNewProcessData(t *testing.T) {
 				tt.args.operation,
 				tt.args.dv,
 				tt.args.dvItems,
+				tt.args.messageName...,
 			).(*xmlProcessData)
 
-			if got.FactoryName != tt.args.factory || !reflect.DeepEqual(got.ItemList, tt.want.ItemList) || got.LotName != tt.want.LotName {
+			if got.FactoryName != tt.args.factory || got.LotName != tt.want.LotName || got.Header.MessageName != tt.want.Header.MessageName {
 				t.Errorf("NewProcessData() = %v, want %v", got, tt.want)
 			}
 		})
@@ -220,7 +263,7 @@ func Test_checkSiteName(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := checkSitename(tt.args.k); got != tt.want {
+			if got := checkSiteName(tt.args.k); got != tt.want {
 				t.Errorf("checkKey() = %v, want %v", got, tt.want)
 			}
 		})
@@ -242,7 +285,7 @@ func Test_checkSiteName(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := checkSitename(tt.args.k); got != tt.want {
+			if got := checkSiteName(tt.args.k); got != tt.want {
 				t.Errorf("checkKey() = %v, want %v", got, tt.want)
 			}
 		})

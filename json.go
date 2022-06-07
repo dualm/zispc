@@ -79,13 +79,13 @@ func NewJSONProcessDataMulti(machine, lot, recipe, factory, unit, product, spec,
 	}
 }
 
-func AddSite(s []Sites, item, sampleName, sitevalue string, sites map[string]string) []Sites {
+func AddSite(s []Sites, item, sampleName, siteValue string, sites map[string]string) []Sites {
 	if s == nil {
 		s = make([]Sites, 0, 1)
 	}
 
 	if sites == nil {
-		s = append(s, makeSites(item, sampleName, map[string]string{OnlySiteName(): sitevalue}))
+		s = append(s, makeSites(item, sampleName, map[string]string{OnlySiteName(): siteValue}))
 
 		return s
 	}
@@ -98,7 +98,7 @@ func makeSiteList(sampleName string, sites map[string]string) []site {
 	for k, v := range sites {
 		re = append(re, site{
 			SampleMaterialName: sampleName,
-			SiteName:           checkSitename(k),
+			SiteName:           checkSiteName(k),
 			SiteValue:          v,
 		})
 	}
