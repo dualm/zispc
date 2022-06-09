@@ -2,7 +2,7 @@ package zispc
 
 import "testing"
 
-func TestGetSitename(t *testing.T) {
+func TestGetSiteName(t *testing.T) {
 	type args struct {
 		n int
 	}
@@ -30,7 +30,7 @@ func TestGetSitename(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := GetSiteName(tt.args.n); got != tt.want {
-				t.Errorf("GetSitename() = %v, want %v", got, tt.want)
+				t.Errorf("GetSiteName() = %v, want %v", got, tt.want)
 			}
 		})
 	}
@@ -58,7 +58,7 @@ func TestGetSitename(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := GetSiteName(tt.args.n); got != tt.want {
-				t.Errorf("GetSitename() = %v, want %v", got, tt.want)
+				t.Errorf("GetSiteName() = %v, want %v", got, tt.want)
 			}
 		})
 	}

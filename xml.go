@@ -2,6 +2,7 @@ package zispc
 
 import (
 	"encoding/xml"
+	"fmt"
 )
 
 const (
@@ -51,7 +52,18 @@ type xmlProcessData struct {
 }
 
 func (data *xmlProcessData) Encode() ([]byte, error) {
-	return xml.MarshalIndent(data, "  ", "    ")
+	var _field string
+
+	switch {
+	case data.MachineName == emptyItem:
+		_field = "MachineName"
+	case data.LotName == emptyItem:
+		_field = "ProductName"
+	default:
+		return xml.MarshalIndent(data, "  ", "    ")
+	}
+
+	return nil, fmt.Errorf("encode spc message error, invalid %s", _field)
 }
 
 type XMLItem struct {
