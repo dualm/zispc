@@ -9,7 +9,7 @@ const (
 	emptyItem = "-"
 )
 
-type header struct {
+type Header struct {
 	XMLName                   xml.Name `xml:"Header"`
 	MessageName               string   `xml:"MESSAGENAME"`
 	EventComment              string   `xml:"EVENTCOMMENT"`
@@ -17,14 +17,14 @@ type header struct {
 	OriginalSourceSubjectName string   `xml:"ORIGINALSOURCESUBJECTNAME"`
 }
 
-func getHeader(headerLength int, messageName ...string) header {
+func getHeader(headerLength int, messageName ...string) Header {
 	_name := "DataCollectRequest"
 
 	if len(messageName) > 0 {
 		_name = messageName[0]
 	}
 
-	return header{
+	return Header{
 		MessageName:               _name,
 		EventComment:              _name,
 		EventUser:                 _name,
@@ -36,9 +36,9 @@ func makeSubjectName(headerLength int) string {
 	return "_INBOX." + getRandStr(headerLength) + getTransactionId()
 }
 
-type xmlProcessData struct {
+type XmlProcessData struct {
 	XMLName              xml.Name  `xml:"Message"`
-	Header               header    `xml:"Header"`
+	Header               Header    `xml:"Header"`
 	FactoryName          string    `xml:"Body>FACTORYNAME"`
 	ProductSpecName      string    `xml:"Body>PRODUCTSPECNAME"`
 	ProcessFlowName      string    `xml:"Body>PROCESSFLOWNAME"`
@@ -51,7 +51,7 @@ type xmlProcessData struct {
 	ItemList             []XMLItem `xml:"Body>ITEMLIST>ITEM"`
 }
 
-func (data *xmlProcessData) Encode() ([]byte, error) {
+func (data *XmlProcessData) Encode() ([]byte, error) {
 	var _field string
 
 	switch {
@@ -123,7 +123,7 @@ func NewXMLProcessData(headerCount int, machine, recipe, unit, spec, flow, lot, 
 		items = dvItems
 	}
 
-	processData := xmlProcessData{
+	processData := XmlProcessData{
 		Header:               header,
 		FactoryName:          makeEmpty(factory),
 		ProductSpecName:      makeEmpty(spec),

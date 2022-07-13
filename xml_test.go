@@ -28,7 +28,7 @@ func TestNewProcessData(t *testing.T) {
 	tests := []struct {
 		name string
 		args args
-		want *xmlProcessData
+		want *XmlProcessData
 	}{
 		{
 			name: "1",
@@ -49,8 +49,8 @@ func TestNewProcessData(t *testing.T) {
 				dvItems:     nil,
 				messageName: []string{},
 			},
-			want: &xmlProcessData{
-				Header: header{
+			want: &XmlProcessData{
+				Header: Header{
 					MessageName:               "DataCollectRequest",
 					EventComment:              "DataCollectRequest",
 					EventUser:                 "DataCollectRequest",
@@ -98,7 +98,7 @@ func TestNewProcessData(t *testing.T) {
 				dvItems:     nil,
 				messageName: []string{"DataCollectRequest-sv"},
 			},
-			want: &xmlProcessData{
+			want: &XmlProcessData{
 				Header:               svHeader,
 				FactoryName:          "factory",
 				ProductSpecName:      "spec",
@@ -142,7 +142,7 @@ func TestNewProcessData(t *testing.T) {
 				tt.args.dv,
 				tt.args.dvItems,
 				tt.args.messageName...,
-			).(*xmlProcessData)
+			).(*XmlProcessData)
 
 			if got.FactoryName != tt.args.factory || got.LotName != tt.want.LotName || got.Header.MessageName != tt.want.Header.MessageName {
 				t.Errorf("NewProcessData() = %v, want %v", got, tt.want)
