@@ -69,21 +69,21 @@ func (data *XmlProcessData) Encode() ([]byte, error) {
 type XMLItem struct {
 	XMLName  xml.Name `xml:"ITEM"`
 	ItemName string   `xml:"ITEMNAME"`
-	SiteList []dvSite `xml:"SITELIST>SITE"`
+	SiteList []XMLSite `xml:"SITELIST>SITE"`
 }
 
-type dvSite struct {
+type XMLSite struct {
 	XMLName            xml.Name `xml:"SITE"`
 	SiteName           string   `xml:"SITENAME"` // index，从1开始
 	SiteValue          string   `xml:"SITEVALUE"`
 	SampleMaterialName string   `xml:"SAMPLEMATERIALNAME"` // 产品名称
 }
 
-func AddItemToXML(list []XMLItem, name, value, materialName string, sites map[string]string) []XMLItem {
-	if sites == nil {
+func AddItemToXML(list []XMLItem, name, value, materialName string, xmlSites map[string]string) []XMLItem {
+	if xmlSites == nil {
 		list = append(list, XMLItem{
 			ItemName: name,
-			SiteList: []dvSite{
+			SiteList: []XMLSite{
 				{
 					SiteName:           OnlySiteName(),
 					SiteValue:          value,
@@ -92,9 +92,9 @@ func AddItemToXML(list []XMLItem, name, value, materialName string, sites map[st
 			},
 		})
 	} else {
-		siteList := make([]dvSite, 0, len(sites))
-		for k, v := range sites {
-			siteList = append(siteList, dvSite{
+		siteList := make([]XMLSite, 0, len(xmlSites))
+		for k, v := range xmlSites {
+			siteList = append(siteList, XMLSite{
 				SiteName:           checkSiteName(k),
 				SiteValue:          v,
 				SampleMaterialName: materialName,

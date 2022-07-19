@@ -68,7 +68,7 @@ func TestNewProcessData(t *testing.T) {
 				ItemList: []XMLItem{
 					{
 						ItemName: "k1",
-						SiteList: []dvSite{
+						SiteList: []XMLSite{
 							{
 								SiteName:           "S01",
 								SiteValue:          "v1",
@@ -112,7 +112,7 @@ func TestNewProcessData(t *testing.T) {
 				ItemList: []XMLItem{
 					{
 						ItemName: "k1",
-						SiteList: []dvSite{
+						SiteList: []XMLSite{
 							{
 								SiteName:           "S01",
 								SiteValue:          "v1",
@@ -179,7 +179,7 @@ func TestAddItem(t *testing.T) {
 			want: []XMLItem{
 				{
 					ItemName: "k1",
-					SiteList: []dvSite{
+					SiteList: []XMLSite{
 						{
 							SiteName:           "S01",
 							SiteValue:          "v1",
@@ -205,7 +205,7 @@ func TestAddItem(t *testing.T) {
 			want: []XMLItem{
 				{
 					ItemName: "k1",
-					SiteList: []dvSite{
+					SiteList: []XMLSite{
 						{
 							SiteName:           "S01",
 							SiteValue:          "1",

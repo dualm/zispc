@@ -55,7 +55,7 @@ func TestNewJSONProcessData(t *testing.T) {
 				LotName:              "lot",
 				ProductName:          "product",
 				ItemName:             "item",
-				SiteList: []site{
+				SiteList: []JSONSite{
 					{
 						SiteName:  "S01",
 						SiteValue: "1",
@@ -97,7 +97,7 @@ func Test_makeSiteList(t *testing.T) {
 	tests := []struct {
 		name string
 		args args
-		want []site
+		want []JSONSite
 	}{
 		{
 			name: "1",
@@ -105,7 +105,7 @@ func Test_makeSiteList(t *testing.T) {
 				sampleName: "sample",
 				sites:      map[string]string{"S01": "1", "S002": "2", "S003": "3"},
 			},
-			want: []site{
+			want: []JSONSite{
 				{
 					SampleMaterialName: "sample",
 					SiteName:           "S01",
@@ -129,7 +129,7 @@ func Test_makeSiteList(t *testing.T) {
 				sampleName: "",
 				sites:      map[string]string{"S001": "1", "S002": "2", "": "3"},
 			},
-			want: []site{
+			want: []JSONSite{
 				{
 					SiteName:  "S001",
 					SiteValue: "1",
@@ -207,7 +207,7 @@ func TestNewJSONProcessDataMulti(t *testing.T) {
 				SiteList: []Sites{
 					{
 						ItemName: "1",
-						Sites: []site{
+						Sites: []JSONSite{
 							{
 								SampleMaterialName: "sample1",
 								SiteName:           "S01",
@@ -227,7 +227,7 @@ func TestNewJSONProcessDataMulti(t *testing.T) {
 					},
 					{
 						ItemName: "2",
-						Sites: []site{
+						Sites: []JSONSite{
 							{
 								SampleMaterialName: "sample1",
 								SiteName:           "S01",
@@ -294,7 +294,7 @@ func TestAddSite(t *testing.T) {
 			want: []Sites{
 				{
 					ItemName: "item1",
-					Sites: []site{
+					Sites: []JSONSite{
 						{
 							SampleMaterialName: "sample1",
 							SiteName:           "S01",
@@ -315,7 +315,7 @@ func TestAddSite(t *testing.T) {
 				s: []Sites{
 					{
 						ItemName: "item1",
-						Sites: []site{
+						Sites: []JSONSite{
 							{
 								SampleMaterialName: "sample1",
 								SiteName:           "S01",
@@ -339,7 +339,7 @@ func TestAddSite(t *testing.T) {
 			want: []Sites{
 				{
 					ItemName: "item1",
-					Sites: []site{
+					Sites: []JSONSite{
 						{
 							SampleMaterialName: "sample1",
 							SiteName:           "S01",
@@ -354,7 +354,7 @@ func TestAddSite(t *testing.T) {
 				},
 				{
 					ItemName: "item2",
-					Sites: []site{
+					Sites: []JSONSite{
 						{
 							SampleMaterialName: "sample1",
 							SiteName:           "S03",
@@ -381,7 +381,7 @@ func TestAddSite(t *testing.T) {
 			want: []Sites{
 				{
 					ItemName: "item1",
-					Sites: []site{
+					Sites: []JSONSite{
 						{
 							SampleMaterialName: "sample1",
 							SiteName:           "S01",

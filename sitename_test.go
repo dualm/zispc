@@ -29,7 +29,7 @@ func TestGetSiteName(t *testing.T) {
 	SetWithS()
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := GetSiteName(tt.args.n); got != tt.want {
+			if got := GetXMLSiteName(tt.args.n); got != tt.want {
 				t.Errorf("GetSiteName() = %v, want %v", got, tt.want)
 			}
 		})
@@ -57,7 +57,7 @@ func TestGetSiteName(t *testing.T) {
 	UnsetWithS()
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := GetSiteName(tt.args.n); got != tt.want {
+			if got := GetXMLSiteName(tt.args.n); got != tt.want {
 				t.Errorf("GetSiteName() = %v, want %v", got, tt.want)
 			}
 		})

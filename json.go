@@ -13,10 +13,10 @@ type jsonProcessData struct {
 	LotName              string `json:"LOTNAME"`
 	ProductName          string `json:"PRODUCTNAME"`
 	ItemName             string `json:"ITEMNAME"`
-	SiteList             []site `json:"SITELIST"`
+	SiteList             []JSONSite `json:"SITELIST"`
 }
 
-type site struct {
+type JSONSite struct {
 	SampleMaterialName string `json:"SAMPLEMATERIALNAME,omitempty"`
 	SiteName           string `json:"SITENAME"`
 	SiteValue          string `json:"SITEVALUE"`
@@ -24,7 +24,7 @@ type site struct {
 
 type Sites struct {
 	ItemName string `json:"ITEMNAME"`
-	Sites    []site `json:"SITES"`
+	Sites    []JSONSite `json:"SITES"`
 }
 
 func (data *jsonProcessData) Encode() ([]byte, error) {
@@ -93,10 +93,10 @@ func AddSite(s []Sites, item, sampleName, siteValue string, sites map[string]str
 	return append(s, makeSites(item, sampleName, sites))
 }
 
-func makeSiteList(sampleName string, sites map[string]string) []site {
-	re := make([]site, 0, len(sites))
+func makeSiteList(sampleName string, sites map[string]string) []JSONSite {
+	re := make([]JSONSite, 0, len(sites))
 	for k, v := range sites {
-		re = append(re, site{
+		re = append(re, JSONSite{
 			SampleMaterialName: sampleName,
 			SiteName:           checkSiteName(k),
 			SiteValue:          v,

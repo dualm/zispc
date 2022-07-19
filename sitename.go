@@ -6,10 +6,12 @@ import (
 
 var withS bool
 
+// SetWithS, XML sitename为"S00x"的格式
 func SetWithS() {
 	withS = true
 }
 
+// UnsetWIthS, XML sitename为"00x"的格式
 func UnsetWithS() {
 	withS = false
 }
@@ -38,10 +40,22 @@ func checkSiteName(k string) string {
 	return k
 }
 
-func GetSiteName(n int) string {
+// GetXMLSiteName, 生成XML sitename
+func GetXMLSiteName(n int) string {
 	if withS {
 		return fmt.Sprintf("S%02d", n)
 	}
 
 	return fmt.Sprintf("%03d", n)
+}
+
+// MakeXMLSites，由字符串切片转换为字符串map
+func MakeXMLSites(sites []string) map[string]string {
+	m := make(map[string]string)
+
+	for i := range sites {
+		m[GetXMLSiteName(i+1)] = sites[i]
+	}
+
+	return m
 }
