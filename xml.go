@@ -58,7 +58,7 @@ func (data *XmlProcessData) Encode() ([]byte, error) {
 	case data.MachineName == emptyItem:
 		_field = "MachineName"
 	case data.LotName == emptyItem:
-		_field = "ProductName"
+		_field = "LotName"
 	default:
 		return xml.MarshalIndent(data, "  ", "    ")
 	}
