@@ -18,7 +18,7 @@ func UnsetWithS() {
 
 func OnlySiteName() string {
 	if withS {
-		return "S01"
+		return "S001"
 	}
 
 	return "001"
