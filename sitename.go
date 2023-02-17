@@ -16,6 +16,7 @@ func UnsetWithS() {
 	withS = false
 }
 
+// OnlySiteName XML site name为"S001"的格式
 func OnlySiteName() string {
 	if withS {
 		return "S001"
