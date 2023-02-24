@@ -48,6 +48,7 @@ type XmlProcessData struct {
 	UnitName             string    `xml:"Body>UNITNAME"`
 	LotName              string    `xml:"Body>LOTNAME"`
 	ProductName          string    `xml:"Body>PRODUCTNAME"`
+	MaterialName         string    `xml:"Body>MATERIALNAME"`
 	ItemList             []XMLItem `xml:"Body>ITEMLIST>ITEM"`
 }
 
@@ -67,8 +68,8 @@ func (data *XmlProcessData) Encode() ([]byte, error) {
 }
 
 type XMLItem struct {
-	XMLName  xml.Name `xml:"ITEM"`
-	ItemName string   `xml:"ITEMNAME"`
+	XMLName  xml.Name  `xml:"ITEM"`
+	ItemName string    `xml:"ITEMNAME"`
 	SiteList []XMLSite `xml:"SITELIST>SITE"`
 }
 
@@ -109,7 +110,7 @@ func AddItemToXML(list []XMLItem, name, value, materialName string, xmlSites map
 	return list
 }
 
-func NewXMLProcessData(headerCount int, machine, recipe, unit, spec, flow, lot, product, factory, operation string,
+func NewXMLProcessData(headerCount int, machine, recipe, unit, spec, flow, lot, product, factory, operation, material string,
 	dv map[string]string, dvItems []XMLItem, messageName ...string) ProcessData {
 	header := getHeader(headerCount, messageName...)
 
@@ -134,6 +135,7 @@ func NewXMLProcessData(headerCount int, machine, recipe, unit, spec, flow, lot, 
 		UnitName:             makeEmpty(unit),
 		LotName:              makeEmpty(lot),
 		ProductName:          makeEmpty(product),
+		MaterialName:         makeEmpty(material),
 		ItemList:             items,
 	}
 
